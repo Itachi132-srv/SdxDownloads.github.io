@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SdxDownloads - Video & MP3 Downloader</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0a0a0a',
+                        purplePrimary: '#9333ea',
+                        purpleGlow: '#a855f7',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Link External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-black text-white min-h-screen flex flex-col justify-between selection:bg-purple-600 selection:text-white">
+
+    <!-- Background Glow Effect -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <!-- Navigation Header -->
+    <header class="w-full border-b border-zinc-900 bg-black/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl font-extrabold tracking-tight text-white">Sdx<span class="text-purple-500">Downloads</span></span>
+            </div>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400">
+                <a href="#" class="hover:text-purple-400 transition-colors">Home</a>
+                <a href="#" class="hover:text-purple-400 transition-colors">How It Works</a>
+                <a href="#" class="hover:text-purple-400 transition-colors">Pricing</a>
+                <a href="#" class="hover:text-purple-400 transition-colors">FAQ</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <button class="text-sm font-medium text-zinc-300 hover:text-white px-4 py-2">Login</button>
+                <button class="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-lg shadow-purple-600/20 transition-all transform hover:scale-105">
+                    GET PRO
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Hero Section -->
+    <main class="flex-1 flex flex-col items-center justify-center px-4 py-16 z-10">
+        <div class="max-w-4xl w-full text-center space-y-6">
+            
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight">
+                Download Videos. <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-600">Your Way.</span>
+            </h1>
+            <p class="text-zinc-400 text-lg md:text-xl max-w-xl mx-auto">
+                Convert supported video links into high-quality video or MP3 files instantly.
+            </p>
+
+            <!-- Downloader Input Card -->
+            <div class="mt-8 p-6 md:p-8 glass-card rounded-3xl purple-glow">
+                <form id="downloadForm" class="flex flex-col md:flex-row gap-4">
+                    <input 
+                        type="url" 
+                        id="urlInput" 
+                        required
+                        placeholder="Paste your video link here..." 
+                        class="flex-1 bg-black/90 border border-zinc-800 focus:border-purple-500 rounded-2xl px-6 py-4 text-white placeholder-zinc-500 outline-none transition-all shadow-inner"
+                    />
+                    <button 
+                        type="submit" 
+                        id="analyzeBtn"
+                        class="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-semibold px-8 py-4 rounded-2xl shadow-lg shadow-purple-600/30 transition-all transform hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center min-w-[150px]"
+                    >
+                        Analyze
+                    </button>
+                </form>
+
+                <!-- Daily Counter -->
+                <div class="flex items-center justify-between text-xs md:text-sm text-zinc-400 mt-4 px-2">
+                    <span>Free Plan Active</span>
+                    <span>Downloads remaining today: <strong class="text-purple-400 font-semibold">2/2</strong></span>
+                </div>
+            </div>
+
+            <!-- Preview Card (Hidden by default, shown after analyze) -->
+            <div id="previewCard" class="hidden mt-8 p-6 md:p-8 glass-card rounded-3xl text-left border border-purple-500/30 transition-all animate-fadeIn">
+                <div class="flex flex-col md:flex-row gap-6 items-center">
+                    <div class="w-full md:w-48 h-32 bg-zinc-800 rounded-xl overflow-hidden relative flex-shrink-0">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-purple-900/40 to-transparent flex items-center justify-center text-zinc-500 text-xs font-medium">Thumbnail Preview</div>
+                    </div>
+                    <div class="flex-1 space-y-2 w-full">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs uppercase tracking-wider bg-purple-950 text-purple-300 border border-purple-800/50 px-2.5 py-1 rounded-full font-semibold">Ready</span>
+                            <span class="text-xs text-zinc-400">Duration: 03:45</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white line-clamp-1">Sample Video Title - High Quality Stream</h3>
+                        <div class="grid grid-cols-2 gap-4 pt-2">
+                            <div>
+                                <label class="text-xs text-zinc-400 block mb-1">Format</label>
+                                <select class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-sm text-white outline-none focus:border-purple-500">
+                                    <option>MP4 (Video)</option>
+                                    <option>MP3 (Audio)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-xs text-zinc-400 block mb-1">Quality (Max 1080p)</label>
+                                <select class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-sm text-white outline-none focus:border-purple-500">
+                                    <option>1080p Full HD</option>
+                                    <option>720p HD</option>
+                                    <option>480p SD</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-zinc-900 flex justify-end">
+                    <button class="bg-purple-600 hover:bg-purple-500 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow-lg shadow-purple-600/20">
+                        Download File
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full border-t border-zinc-900 bg-black py-8">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+            <div class="flex items-center gap-6">
+                <a href="#" class="hover:text-zinc-300 transition-colors">About</a>
+                <a href="#" class="hover:text-zinc-300 transition-colors">Pricing</a>
+                <a href="#" class="hover:text-zinc-300 transition-colors">Terms of Service</a>
+                <a href="#" class="hover:text-zinc-300 transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-zinc-300 transition-colors">Contact</a>
+            </div>
+            <div>
+                &copy; 2026 SdxDownloads. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Link External JS -->
+    <script src="script.js"></script>
+</body>
+</html>
+
