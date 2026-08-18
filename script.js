@@ -1,11 +1,13 @@
 const form = document.getElementById('downloadForm');
 const analyzeBtn = document.getElementById('analyzeBtn');
 const previewCard = document.getElementById('previewCard');
+const urlInput = document.getElementById('urlInput');
 
-form.addEventListener('submit', function(e) {
+form.addEventListener('submit', async function(e) {
     e.preventDefault();
-    
-    // Show loading spinner state
+    const url = urlInput.value.trim();
+    if (!url) return;
+
     analyzeBtn.disabled = true;
     analyzeBtn.innerHTML = `
         <svg class="animate-spin h-5 w-5 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -14,12 +16,33 @@ form.addEventListener('submit', function(e) {
         </svg>
     `;
 
-    // Simulate server response delay
-    setTimeout(() => {
+    try {
+        const response = await fetch('/api/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            previewCard.classList.remove('hidden');
+            previewCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+            alert(data.message || 'Error analyzing link.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to connect to the server.');
+    } finally {
         analyzeBtn.disabled = false;
         analyzeBtn.innerHTML = 'Analyze';
-        previewCard.classList.remove('hidden');
-        previewCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 1200);
+    }
 });
 
+// Handle Download Button Click
+const downloadFileBtn = previewCard.querySelector('button');
+downloadFileBtn.addEventListener('click', () => {
+    // Direct browser to download endpoint
+    window.location.href = '/api/download';
+});
